@@ -1,12 +1,13 @@
 const WebSocket = require('ws');
-const fs = require('fs');
-const eps = require('ejs');
+//const fs = require('fs');
+//const eps = require('ejs');
 
 const PlayRoom = require('./js/playRoom');
 const Player = require('./js/player');
 
-var SERVER_PORT = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080;
-var ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
+var SERVER_PORT = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8000;
+var SERVER_IP   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
+
 
 
 const maxRoom = 2;
@@ -17,6 +18,7 @@ var r;
 for (r = 0; r < maxRoom; r++ ) {
   myPlayRoom[r] = new PlayRoom('Room' + r);
 }
+
 
 function showRoomInfo() {
   var r = 0;
@@ -86,7 +88,7 @@ function broadcastMsg() {
 }
 
 //const server = new WebSocket.Server({ port: 3000 });
-const server = new WebSocket.Server({ port: SERVER_PORT });
+const server = new WebSocket.Server({ host: SERVER_IP, port: SERVER_PORT });
 
 
 server.on('open', function open() {
@@ -219,6 +221,8 @@ server.on('connection', function connection(ws, req) {
 
 });
 
+
+
 function sendResultToClient(pr) {
   console.log("sendResultToClient");
 //  var pr = player.joinedRoom;            
@@ -243,6 +247,20 @@ function sendResultToClient(pr) {
     p1.ws.send(msg);
   }, 500); 
 };
+
+
+
+
+console.log(server);
+/*
+function abc() {
+  console.log(server);
+}
+console.log("b2");
+
+var ss = setInterval(abc, 3000);
+console.log("b3");
+*/
 
 const interval = setInterval(function ping() {
   server.clients.forEach(function each(ws) {
