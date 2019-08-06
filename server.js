@@ -5,10 +5,12 @@ const WebSocket = require('ws');
 const PlayRoom = require('./js/playRoom');
 const Player = require('./js/player');
 
-var SERVER_PORT = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8000;
-var SERVER_IP   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
+var SERVER_PORT = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT ||  process.env.OPENSHIFT_INTERNAL_PORT || process.env.PORT || 8000;
+var SERVER_IP   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || process.env.OPENSHIFT_INTERNAL_IP || '0.0.0.0';
 
-
+console.log("pIP=" + process.env.IP);
+console.log("pNodeIP=" + process.env.OPENSHIFT_NODEJS_IP);
+console.log("ipNodeIP=" + process.env.OPENSHIFT_INTERNAL_IP);
 
 const maxRoom = 2;
 let myPlayRoom = {};
