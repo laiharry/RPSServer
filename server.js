@@ -90,7 +90,7 @@ function broadcastMsg() {
 }
 
 //const server = new WebSocket.Server({ port: 3000 });
-const server = new WebSocket.Server({ host: SERVER_IP, port: SERVER_PORT });
+const server = new WebSocket.Server({port: SERVER_PORT });
 
 
 server.on('open', function open() {
